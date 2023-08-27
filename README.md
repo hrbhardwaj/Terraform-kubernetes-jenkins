@@ -10,45 +10,36 @@ In this Project I used these tools :
 
 Step1 : Simple Install terraform on ec2 instance and launch three server by the help of terraform script .
 
-...
-   bash
+Step2 : Install jenkins and create a jenkins and node cluster with kube-master server 
 
-   terraform
-     required providers {
-       aws = {
-        source = "hashicorp/aws" 
-        }
-    }
-}
-provider "aws" {
-  region     = "us-west-1"
-  access_key = " "
-  secret_key = " "
-    
-}
-resource "aws_instance" "example_instance" {
-  count         = 1
-  ami           = "ami-0c55b159cbfafe1f0"  # Change to your desired AMI ID
-  instance_type = "t2.medium"
+Step3 : Now create a pipeline for running four jobs with the pipeline 
+
+  *  Print hello world    
+
+  *  Clone the repository to Github    
+
+  *  Build the docker images from docker file and push to docker-hub   
+
+  *  Apply the Deplyoment manifest and Service minifest on Kube-master
+
+
+<img width="1374" alt="Screenshot 2023-08-26 at 8 20 44 PM" src="https://github.com/hrbhardwaj/Terraform-kubernetes-jenkins/assets/131919525/6bd45433-4cea-469c-9dbd-522a44c2b6e7">
+
+
+Now you can Check the website with public Ip with Nordport !!!
+
+
+It will visible by all worker node IP
+
+
+
+
+
+
+
+
+
   
-  tags = {
-    Name = "kubemaster"
-
-}
-resource "aws_instance" "example_instance" {
-  count         = 2
-  ami           = "ami-0c55b159cbfafe1f0"  # Change to your desired AMI ID
-  instance_type = "t2.medium"
-  
-  tags = {
-    Name = "kubeslave"
 
 
 
-}
-
-
-
-
-
-...
