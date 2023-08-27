@@ -9,9 +9,49 @@ In this Project I used these tools :
 * Kubernetes
 
 Step1 : Simple Install terraform on ec2 instance and launch three server by the help of terraform script .
+<pre>
+<code>
+'''bash
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+    }
+  }
+}
+provider "aws" {
+  region     = "us-west-1"
+  access_key = "YOUR_ACCESS_KEY"
+  secret_key = "YOUR_SECRET_KEY"
+}
+resource "aws_instance" "master_instance" {
+  count         = 1
+  ami           = "ami-0c55b159cbfafe1f0"  # Change to your desired AMI ID
+  instance_type = "t2.medium"
 
-Step2 : Install jenkins and create a jenkins and node cluster with kube-master server 
+  tags = {
+    Name = "kubemaster"
+  }
+}
+resource "aws_instance" "slave_instance" {
+  count         = 2
+  ami           = "ami-0c55b159cbfafe1f0"  # Change to your desired AMI ID
+  instance_type = "t2.medium"
 
+  tags = {
+    Name = "kubeslave"
+  }
+}
+ '''
+</code>
+</pre>
+
+Step2 : Install jenkins and create a jenkins and node cluster with kube-master server
+<pre>
+<code>
+
+</code>
+</pre>
 Step3 : Now create a pipeline for running four jobs with the pipeline 
 
   *  Print hello world    
