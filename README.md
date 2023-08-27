@@ -11,7 +11,7 @@ In this Project I used these tools :
 Step1 : Simple Install terraform on ec2 instance and launch three server by the help of terraform script .
 <pre>
 <code>
-'''bash
+# Terraform File to Create instances 
 terraform {
   required_providers {
     aws = {
@@ -42,6 +42,7 @@ resource "aws_instance" "slave_instance" {
     Name = "kubeslave"
   }
 }
+# chnage the ami and access & secret key.
  '''
 </code>
 </pre>
@@ -49,7 +50,52 @@ resource "aws_instance" "slave_instance" {
 Step2 : Install jenkins and create a jenkins and node cluster with kube-master server
 <pre>
 <code>
+# Jenkins pipeline to deployment the jobs(website) on slave 
 
+  pipeline {
+    agent none
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('0519a98d-69e6-44b2-89fd-c2f9e2a6308e')
+        GIT_CREDENTIALS = credentials('ba8db134-f2e0-44d7-b91d-edc48463ca1c')
+    }
+    stages {
+        stage('Hello world') {
+            agent {
+                label 'kubemaster'
+            }
+            steps {
+                echo 'I am testing my script'
+            }
+        }
+        stage('gitCheckout') {
+            agent {
+                label 'kubemaster'
+            }            
+            steps {
+                git branch: 'main', credentialsId: 'ba8db134-f2e0-44d7-b91d-edc48463ca1c', url: 'https://github.com/hrbhardwaj/Terraform-kubernetes-jenkins.git'
+            }
+        }
+        stage('Dockerhub') {
+            agent {
+                label 'kubemaster'
+            }        
+            steps {
+                sh 'sudo docker build /home/ubuntu/workspace/pipeline -t hrithikbhadwaj/website2 '
+                sh "echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+                sh 'sudo docker push hrithikbhadwaj/website2'
+            }
+        }        
+        stage('deployment') {
+            agent {
+                label 'kubemaster'
+            }        
+            steps {
+                sh 'sudo kubectl apply -f /home/ubuntu/workspace/pipeline/deploy.yml'
+                sh 'sudo kubectl apply -f /home/ubuntu/workspace/pipeline/svc.yml'
+            }
+        }
+    }
+}  
 </code>
 </pre>
 Step3 : Now create a pipeline for running four jobs with the pipeline 
