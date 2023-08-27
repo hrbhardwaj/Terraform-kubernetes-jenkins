@@ -12,6 +12,7 @@ Step1 : Simple Install terraform on ec2 instance and launch three server by the 
 <pre>
 <code>
 # Terraform File to Create instances 
+  
 terraform {
   required_providers {
     aws = {
@@ -42,15 +43,13 @@ resource "aws_instance" "slave_instance" {
     Name = "kubeslave"
   }
 }
-# chnage the ami and access & secret key.
- '''
 </code>
 </pre>
 
 Step2 : Install jenkins and create a jenkins and node cluster with kube-master server
 <pre>
 <code>
-# Jenkins pipeline to deployment the jobs(website) on slave 
+# Jenkins pipeline to deployment the jobs(website) on Kubernetes
 
   pipeline {
     agent none
@@ -96,6 +95,7 @@ Step2 : Install jenkins and create a jenkins and node cluster with kube-master s
         }
     }
 }  
+# Change your Dockerhub-Credentials With ID  and Save in Jenkins Credentials .
 </code>
 </pre>
 Step3 : Now create a pipeline for running four jobs with the pipeline 
