@@ -28,6 +28,20 @@ Step3 : Now create a pipeline for running four jobs with the pipeline
 
 Now you can Check the website with public Ip with Nordport !!!
 
+Slav1 IP with Nordport
+
+
+<img width="1440" alt="Screenshot 2023-08-27 at 3 19 04 AM" src="https://github.com/hrbhardwaj/Terraform-kubernetes-jenkins/assets/131919525/fefa3a9b-91b5-4b9b-a260-affb4c2548a3">
+
+
+
+Slav2 Ip with NordPort
+
+
+<img width="1415" alt="Screenshot 2023-08-27 at 3 19 21 AM" src="https://github.com/hrbhardwaj/Terraform-kubernetes-jenkins/assets/131919525/494e2078-de1f-437e-97d4-c9efffeedd2d">
+
+
+
 
 It will visible by all worker node IP
 
